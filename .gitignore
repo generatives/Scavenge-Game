@@ -38,7 +38,6 @@ Scavenge/AdamsLair.WinForms.xml
 Scavenge/perflog_editor.txt
 Scavenge/DDoc.chm
 Scavenge/DesignTimeData.dat
-!Scavenge/DualityEditor.exe
 Scavenge/DualityEditor.pdb
 Scavenge/DualityEditor.xml
 Scavenge/DualityLauncher.exe
@@ -57,3 +56,12 @@ Scavenge/Source/Code/packages/
 Scavenge/Temp/
 Publish/
 Scavenge/Backup/
+!Duality.dll
+!DualityEditor.exe
+!DualityEditor.exe.config
+!DualityPrimitives.dll
+!NuGet.Core.dll
+!PackageConfig.xml
+!VistaBridgeLibrary.dll
+!Windows7.DesktopIntegration.dll
+!packages.config
