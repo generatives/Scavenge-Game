@@ -1,0 +1,179 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>GamePlugin.core</name>
+    </assembly>
+    <members>
+        <member name="T:Scavenge.ScavengeCorePlugin">
+            <summary>
+            Defines a Duality core plugin.
+            </summary>
+        </member>
+        <member name="T:Scavenge.TileMap.ObstructedTilemapRenderer">
+            <summary>
+            Renders a <see cref="T:Duality.Plugins.Tilemaps.Tilemap"/> that either belongs to the same <see cref="T:Duality.GameObject"/>
+            or is referenced by <see cref="P:Scavenge.TileMap.ObstructedTilemapRenderer.ExternalTilemap"/>.
+            </summary>
+        </member>
+        <member name="P:Scavenge.TileMap.ObstructedTilemapRenderer.BaseDepthOffset">
+            <summary>
+            [GET] The base depth offset that will be used when rendering a non-flat / deep <see cref="T:Duality.Plugins.Tilemaps.Tilemap"/>.
+            This property represents the sum of all non-local depth adjustments in the rendered <see cref="T:Duality.Plugins.Tilemaps.Tilemap"/>,
+            expressed as an offset to the depth that is implicitly defined by the <see cref="T:Duality.Components.Transform"/> Z position.
+            
+            This offset is automatically calculated based on <see cref="P:Scavenge.TileMap.ObstructedTilemapRenderer.DepthOffset"/> and <see cref="P:Scavenge.TileMap.ObstructedTilemapRenderer.TileDepthOffset"/>.
+            </summary>
+        </member>
+        <member name="P:Scavenge.TileMap.ObstructedTilemapRenderer.DepthOffset">
+            <summary>
+            [GET / SET] The depth offset for the rendered <see cref="T:Duality.Plugins.Tilemaps.Tilemap"/> that is added
+            to each output vertex without contributing to perspective effects such as parallax.
+            </summary>
+        </member>
+        <member name="P:Scavenge.TileMap.ObstructedTilemapRenderer.TileDepthOffset">
+            <summary>
+            [GET / SET] An offset measured in tiles that is assumed in the depth offset generation.
+            With an offset of one, each tile will be rendered with the base offset of "one tile higher up".
+            
+            This can be used as a quick way to layer different tilemaps on each other where each layer
+            represents a certain world space height. The same effect can be achieved by carefully adjusting 
+            the <see cref="P:Scavenge.TileMap.ObstructedTilemapRenderer.DepthOffset"/>.
+            </summary>
+        </member>
+        <member name="P:Scavenge.TileMap.ObstructedTilemapRenderer.TileDepthScale">
+            <summary>
+            [GET / SET] The depth offset scale that is used to determine how much depth each 
+            tile / pixel / unit adds when using non-flat depth offset generation.
+            </summary>
+        </member>
+        <member name="P:Scavenge.TileMap.ObstructedTilemapRenderer.TileDepthMode">
+            <summary>
+            [GET / SET] Specifies the way in which depth offsets are generated per-tile.
+            </summary>
+        </member>
+        <member name="P:Scavenge.TileMap.ObstructedTilemapRenderer.ColorTint">
+            <summary>
+            [GET / SET] A color by which the rendered <see cref="T:Duality.Plugins.Tilemaps.Tilemap"/> is tinted.
+            </summary>
+        </member>
+        <member name="P:Scavenge.TileMap.ObstructedTilemapRenderer.Origin">
+            <summary>
+            [GET / SET] The origin of the rendered <see cref="T:Duality.Plugins.Tilemaps.Tilemap"/> as a whole, relative to the position of its <see cref="T:Duality.GameObject"/>.
+            </summary>
+        </member>
+        <member name="P:Scavenge.TileMap.ObstructedTilemapRenderer.ExternalTilemap">
+            <summary>
+            [GET / SET] The <see cref="T:Duality.Plugins.Tilemaps.Tilemap"/> that should be rendered. 
+            If this is null, the local <see cref="T:Duality.Plugins.Tilemaps.Tilemap"/> on the same <see cref="T:Duality.GameObject"/> is used.
+            </summary>
+        </member>
+        <member name="P:Scavenge.TileMap.ObstructedTilemapRenderer.ActiveTilemap">
+            <summary>
+            [GET] A reference to the <see cref="T:Duality.Plugins.Tilemaps.Tilemap"/> that is currently rendered by this <see cref="T:Duality.Plugins.Tilemaps.TilemapRenderer"/>.
+            </summary>
+        </member>
+        <member name="P:Scavenge.TileMap.ObstructedTilemapRenderer.LocalTilemapRect">
+            <summary>
+            [GET] The rectangular region that is occupied by the rendered <see cref="T:Duality.Plugins.Tilemaps.Tilemap"/>, in local / object space.
+            </summary>
+        </member>
+        <member name="P:Scavenge.TileMap.ObstructedTilemapRenderer.LocalTileSize">
+            <summary>
+            [GET] Returns the size of a single tile in local / object space.
+            </summary>
+        </member>
+        <member name="M:Scavenge.TileMap.ObstructedTilemapRenderer.GetTileAtLocalPos(Duality.Vector2,Duality.Plugins.Tilemaps.TilePickMode)">
+            <summary>
+            Given the specified coordinate in local / object space, this method returns the
+            tile index that is located there.
+            </summary>
+            <param name="localPos"></param>
+            <param name="pickMode">Specifies the desired behavior when attempting to get a tile outside the rendered area.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Scavenge.TileMap.ObstructedTilemapRenderer.GetLocalPosAtTile(Duality.Point2)">
+            <summary>
+            Gets the local position of the specified tile at the upper left corner.
+            The function does not check if the point is a valid tile position.
+            </summary>
+            <param name="tilePos">The index of the tile of which to calculate the local position.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Scavenge.TileMap.ObstructedTilemapRenderer.GetTileDepthOffsetAt(Duality.Point2)">
+            <summary>
+            Determines the generated depth offset for the tile at the specified tile coordinates.
+            This also inclues the renderers overall offset as specified in <see cref="P:Scavenge.TileMap.ObstructedTilemapRenderer.DepthOffset"/>,
+            but ignores all actual per-tile and tileset depth offsets. The specified tile position
+            is considered virtual and does not have to be within the valid tile position range.
+            </summary>
+            <param name="tilePos">The index of the tile of which to calculate the depth offset.</param>
+            <returns></returns>
+        </member>
+        <member name="P:Scavenge.TileMap.TileMapObstructionBase.LocalTilemapRect">
+            <summary>
+            [GET] The rectangular region that is occupied by the rendered <see cref="T:Duality.Plugins.Tilemaps.Tilemap"/>, in local / object space.
+            </summary>
+        </member>
+        <member name="M:Scavenge.TileMap.TileMapObstructionBase.GetLocalPosAtTile(Duality.Point2)">
+            <summary>
+            Gets the local position of the specified tile at the upper left corner.
+            The function does not check if the point is a valid tile position.
+            </summary>
+            <param name="tilePos">The index of the tile of which to calculate the local position.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Scavenge.TileMap.TileMapObstructionBase.GetTileAtLocalPos(Duality.Vector2,Duality.Plugins.Tilemaps.TilePickMode)">
+            <summary>
+            Given the specified coordinate in local / object space, this method returns the
+            tile index that is located there.
+            </summary>
+            <param name="localPos"></param>
+            <param name="pickMode">Specifies the desired behavior when attempting to get a tile outside the rendered area.</param>
+            <returns></returns>
+        </member>
+        <member name="T:Scavenge.TileMap.TileMapObstructionRenderer">
+            <summary>
+            Renders a <see cref="T:Duality.Plugins.Tilemaps.Tilemap"/> that either belongs to the same <see cref="T:Duality.GameObject"/>
+            or is referenced by <see cref="!:ExternalTilemap"/>.
+            </summary>
+        </member>
+        <member name="P:Scavenge.TileMap.TileMapObstructionRenderer.DepthOffset">
+            <summary>
+            [GET / SET] The depth offset for the rendered <see cref="T:Duality.Plugins.Tilemaps.Tilemap"/> that is added
+            to each output vertex without contributing to perspective effects such as parallax.
+            </summary>
+        </member>
+        <member name="P:Scavenge.TileMap.TileMapObstructionRenderer.ActiveTilemap">
+            <summary>
+            [GET] A reference to the <see cref="T:Duality.Plugins.Tilemaps.Tilemap"/> that is currently rendered by this <see cref="T:Duality.Plugins.Tilemaps.TilemapRenderer"/>.
+            </summary>
+        </member>
+        <member name="P:Scavenge.TileMap.TileMapObstructionRenderer.LocalTilemapRect">
+            <summary>
+            [GET] The rectangular region that is occupied by the rendered <see cref="T:Duality.Plugins.Tilemaps.Tilemap"/>, in local / object space.
+            </summary>
+        </member>
+        <member name="P:Scavenge.TileMap.TileMapObstructionRenderer.LocalTileSize">
+            <summary>
+            [GET] Returns the size of a single tile in local / object space.
+            </summary>
+        </member>
+        <member name="M:Scavenge.TileMap.TileMapObstructionRenderer.GetTileAtLocalPos(Duality.Vector2,Duality.Plugins.Tilemaps.TilePickMode)">
+            <summary>
+            Given the specified coordinate in local / object space, this method returns the
+            tile index that is located there.
+            </summary>
+            <param name="localPos"></param>
+            <param name="pickMode">Specifies the desired behavior when attempting to get a tile outside the rendered area.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Scavenge.TileMap.TileMapObstructionRenderer.GetLocalPosAtTile(Duality.Point2)">
+            <summary>
+            Gets the local position of the specified tile at the upper left corner.
+            The function does not check if the point is a valid tile position.
+            </summary>
+            <param name="tilePos">The index of the tile of which to calculate the local position.</param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>
